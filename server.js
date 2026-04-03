@@ -22,7 +22,6 @@ const allowedOrigins = [
 
 const corsOptions = {
   origin: function (origin, callback) {
-    // Postman / mobile apps / same-origin requests me origin undefined ho sakta hai
     if (!origin) return callback(null, true);
 
     if (allowedOrigins.includes(origin)) {
@@ -44,10 +43,7 @@ const io = new Server(httpServer, {
   },
 });
 
-// CORS middleware only once
 app.use(cors(corsOptions));
-
-// Preflight requests handle karne ke liye
 app.options("*", cors(corsOptions));
 
 app.use(express.json());
